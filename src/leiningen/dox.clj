@@ -3,7 +3,7 @@
             [me.raynes.fs :as fs]
             [clojure.string :as s]))
 
-(programs git mv rm ls)
+(programs git mv rm)
 
 (defn wildcard [s]
   (vec (fs/glob (str s "/*"))))
