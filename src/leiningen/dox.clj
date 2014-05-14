@@ -15,17 +15,16 @@
   [project & args]
   (let [dir (fs/temp-dir "doxx")
         old-dir (or (get-in project [:dox :in])
-                    (first args))]
-    (try
-      (mv-contents old-dir dir)
-      (rm "-r" old-dir)
-      (git "checkout" "gh-pages")
-      (git "rm" "-rf")
-      (mv-contents dir ".")
-      (git "commit" "-m" "Updated docs")
-      (println "*** gh-pages branch updated ***")
-      (git "checkout" "-")
-      (println "Run this to complete:")
-      (println "git push origin gh-pages:gh-pages")
-      (catch clojure.lang.ExceptionInfo e
-        (prn (ex-data e))))))
+                    (first args)
+                    "doc/")]
+    (mv-contents old-dir dir)
+    (rm "-r" old-dir)
+    (git "checkout" "gh-pages")
+    (git "rm" "-rf" ".")
+    (mv-contents dir ".")
+    (git "add" "-Av" ".")
+    (git "commit" "-m" "Updated docs")
+    (println "*** gh-pages branch updated ***")
+    (git "checkout" "-")
+    (println "Run this to complete:")
+    (println "git push origin gh-pages:gh-pages")))
