@@ -1,26 +1,34 @@
 # dox
 
-A Leiningen plugin to do many wonderful things.
+dox is a leiningen plugin for updating `gh-pages` with new documentation, and
+also creating it if it doesn't exist.
 
 ## Usage
 
-FIXME: Use this for user-level plugins:
+First of all, you'll want some kind of documentation generator. My favorite is
+[codox](https://github.com/weavejester/codox). The thing that matters is where
+the documentation files are put after being generated. You'll want to set that
+in `project.clj`:
 
-Put `[dox "0.1.0-SNAPSHOT"]` into the `:plugins` vector of your
-`:user` profile, or if you are on Leiningen 1.x do `lein plugin install
-dox 0.1.0-SNAPSHOT`.
+```clojure
+:dox {:in "somedocs/"}
+```
 
-FIXME: Use this for project-level plugins:
+This tells it to look in `somedocs/` for the documentation files. The default is
+`doc/` which also happens to be codox's default!
 
-Put `[dox "0.1.0-SNAPSHOT"]` into the `:plugins` vector of your project.clj.
+Once all that's fine and dandy, just generate your docs and run `dox`:
 
-FIXME: and add an example usage that actually makes sense:
+```bash
+$ lein do doc, dox
+```
 
-    $ lein dox
+This will switch to (or create) the gh-pages branch, remove everything, add
+these docs, commit, and then switch back. Pretty simple, eh?
 
 ## License
 
-Copyright © 2014 FIXME
+Copyright © 2014 Anthony Grimes
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
